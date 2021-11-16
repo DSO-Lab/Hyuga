@@ -21,7 +21,7 @@ var (
 func genUser() (identity string, token string, err error) {
 	// remove UpperCharset
 	c := random.Charset + random.Number
-	length := 4
+	length := 1
 	times := 0
 
 	for {
@@ -43,8 +43,7 @@ func genUser() (identity string, token string, err error) {
 		if times < 3 {
 			times++
 		} else {
-			times = 0
-			length++
+			return "", "", fmt.Errorf("用户池已满")
 		}
 	}
 	return

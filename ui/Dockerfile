@@ -3,8 +3,10 @@ FROM node:lts-alpine as builder
 WORKDIR /opt/ui
 
 COPY . .
-RUN npm install
-RUN npm run build
+RUN npm config set registry https://registry.npm.taobao.org && \
+    npm config set disturl https://npm.taobao.org/dist && \
+    npm install && \
+    npm run build
 
 #------------------
 FROM nginx

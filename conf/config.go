@@ -11,8 +11,8 @@ import (
 )
 
 type app struct {
-	Env                 string `yaml:"env"`
-	RecordExpirationDay int    `yaml:"recordExpirationDays"`
+	Env                  string `yaml:"env"`
+	RecordExpirationHour int    `yaml:"recordExpirationHours"`
 }
 type domain struct {
 	Main string   `yaml:"main"`
@@ -87,6 +87,6 @@ func SetFromFile(c string) error {
 	AppEnv = conf.App.Env
 	RedisAddr = conf.Redis
 	Domain = conf.Domain
-	RecordExpiration = time.Duration(conf.App.RecordExpirationDay*24*60*60) * time.Second
+	RecordExpiration = time.Duration(conf.App.RecordExpirationHour) * time.Hour
 	return nil
 }

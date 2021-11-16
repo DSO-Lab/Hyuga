@@ -12,7 +12,7 @@ import (
 )
 
 // Limit 查询记录限制
-const Limit = 50
+const Limit = 100
 
 const (
 	// DNSType dns

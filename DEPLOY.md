@@ -21,7 +21,7 @@
 ```yml
 app:
   env: production # development/production
-  recordExpirationDays: 7
+  recordExpirationHours: 2
 redis: redis:6379
 domain:
   main: hyuga.io  # 修改记录域名

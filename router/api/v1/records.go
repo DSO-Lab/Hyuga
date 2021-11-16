@@ -23,7 +23,7 @@ func GetRecords(c echo.Context) error {
 	if err != nil {
 		return c.JSON(internal.ProcessingError(err))
 	}
-	internal.SortRecords(records)
+
 	code := http.StatusOK
 	return c.JSON(code, &internal.RespJSON{
 		Code:    code,

@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"fmt"
+	"sort"
 	"strings"
 	"time"
 
@@ -18,6 +19,21 @@ var (
 	// ErrUserNotFound user不存在
 	ErrUserNotFound = fmt.Errorf("user not found")
 )
+
+// 字符串排序支持
+type ByLength []string
+
+func (s ByLength) Len() int {
+	return len(s)
+}
+
+func (s ByLength) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
+
+func (s ByLength) Less(i, j int) bool {
+	return (s[i]) > (s[j])
+}
 
 // Ping test redis
 func Ping(ctx context.Context) (string, error) {
@@ -173,10 +189,14 @@ func GetRecord(ctx context.Context, rtype, token, filter string) ([]map[string]s
 	if len(recordKeys) < limit {
 		limit = len(recordKeys)
 	}
+
+	// 按时间倒序排列
+	sort.Sort(ByLength(recordKeys))
+
 	for _, key := range recordKeys[:limit] {
 		data, err := rc.HGetAll(ctx, key).Result()
 		if err != nil {
-			return nil, err
+			break
 		}
 
 		data["ts"] = strings.Split(key, "-")[2]
@@ -198,6 +218,7 @@ func GetRecord(ctx context.Context, rtype, token, filter string) ([]map[string]s
 			}
 		}
 	}
+
 	return result, nil
 }
 
