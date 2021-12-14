@@ -1,6 +1,6 @@
 app:
   env: development # development/production
-  recordExpirationHours: 2
+  recordExpirationSeconds: 300
 redis: redis:6379
 domain:
   main: hyuga.io
